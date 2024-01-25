@@ -59,11 +59,11 @@ FINDIT_CACHE = None
 
 pm_fetch = None
 
-def _start_engines():
+def _start_engines(cachedir):
     global pm_fetch
     if not pm_fetch:
         log.debug('Started PubMedFetcher engine.')
-        pm_fetch = PubMedFetcher()
+        pm_fetch = PubMedFetcher(cachedir=cachedir)
 
 def _get_findit_cache(cachedir):
     global FINDIT_CACHE
@@ -107,7 +107,7 @@ class FindIt(object):
 
     def __init__(self, pmid=None, cachedir=DEFAULT_CACHE_DIR, **kwargs):
 
-        _start_engines()
+        _start_engines(cachedir)
 
         self.pmid = pmid if pmid else kwargs.get('pmid', None)
         self.doi = kwargs.get('doi', None)
